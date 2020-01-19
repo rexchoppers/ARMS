@@ -18,4 +18,4 @@ deploy:
     - echo $GAE_DEPLOYER_KEYS > /tmp/$CI_PIPELINE_ID.json
     - composer dump-autoload --optimize
     - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
-    - gcloud --quiet --project $PROJECT_ID app deploy --no-promote --version=production --verbosity=debug app.yaml
+    - gcloud --quiet --project $PROJECT_ID app deploy --version=production --verbosity=debug app.yaml
