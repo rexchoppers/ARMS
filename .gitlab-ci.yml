@@ -1,0 +1,21 @@
+image: broadstonebrady/php7.2-gcp
+
+stages:
+  - deploy
+
+before_script:
+  - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+  - composer install
+
+after_script:
+  - rm /tmp/$CI_PIPELINE_ID.json
+
+deploy:
+  stage: deploy
+  script:
+    - mv $GAE_INSTANCE_DETAILS app.yaml
+    - printf "$GAE_PHP" > php.ini
+    - echo $GAE_DEPLOYER_KEYS > /tmp/$CI_PIPELINE_ID.json
+    - composer dump-autoload --optimize
+    - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
+    - gcloud --quiet --project $PROJECT_ID app deploy --no-promote --version=production --verbosity=debug app.yaml
