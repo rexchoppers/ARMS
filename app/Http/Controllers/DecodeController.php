@@ -98,7 +98,7 @@ class DecodeController extends BaseController
         unlink($imagePath);
 
         return response()->json([
-            'message' => 'Something went wrong with decoding the label. Please try again later',
+            'message' => 'Label decoded',
             'data' => $labelData
         ], 200);
 
