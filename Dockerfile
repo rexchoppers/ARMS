@@ -1,6 +1,6 @@
-FROM gcr.io/google-appengine/php
+FROM wyveo/nginx-php-fpm:php72
 
 RUN apt-get update -y
-RUN apt-get install -y libdmtx-utils
+RUN apt-get install -y dmtx-utils
 
-ADD . /app/
+ADD . /usr/share/nginx/html
