@@ -1,0 +1,11 @@
+version: '3.4'
+services:
+  api:
+    ports:
+      - "9000:8080"
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: "php -S 0.0.0.0:8080 -t public"
+    volumes:
+      - ./:/app
