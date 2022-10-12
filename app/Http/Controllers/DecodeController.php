@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use Dmtx\Reader;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Labelary\Client;
 use Laravel\Lumen\Routing\Controller as BaseController;
 
 class DecodeController extends BaseController
 {
-    public function isBase64Encoded($data)
+    public function isBase64Encoded($data): bool
     {
         if (preg_match('%^[a-zA-Z0-9/+]*={0,2}$%', $data)) {
             return true;
@@ -19,7 +20,8 @@ class DecodeController extends BaseController
         }
     }
 
-    public function generateName() {
+    public function generateName(): string
+    {
         $length = 10;
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
@@ -33,7 +35,8 @@ class DecodeController extends BaseController
         return $randomString;
     }
 
-    public function decode(Request $request) {
+    public function decode(Request $request): JsonResponse
+    {
         $label = $request->all();
 
         if(!array_key_exists('label', $label)) {
