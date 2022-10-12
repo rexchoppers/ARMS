@@ -1,8 +1,8 @@
-FROM php:7.4-alpine3.12
+FROM php:7.3-buster
 
 WORKDIR /app
 
-RUN apk add --update libdmtx bash curl
+RUN apt-get update && apt-get -y install dmtx-utils bash curl git
 
 COPY composer.json composer.lock ./
 
