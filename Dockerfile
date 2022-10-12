@@ -1,12 +1,14 @@
-FROM wyveo/nginx-php-fpm:php72
+FROM php:7.2-alpine3.12
 
-RUN apt-get update -y
-RUN apt-get install -y dmtx-utils
+WORKDIR /app
 
-ADD ./default.conf /etc/nginx/conf.d/default.conf
+RUN apk add --update libdmtx bash curl
 
-ADD . /usr/share/nginx/html/
+COPY composer.json composer.lock ./
 
-WORKDIR /var/www/html
+RUN curl -s https://getcomposer.org/installer | php
+RUN ./composer.phar i
 
-EXPOSE 8080
+COPY . .
+
+CMD ["php", "-S", "localhost:8000", "-t", "./public"]
